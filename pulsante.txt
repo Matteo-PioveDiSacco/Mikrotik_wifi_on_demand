@@ -1,0 +1,35 @@
+# Ver.: 1.01 del 20240711
+# Ordinato il codice per fare chiarezza nei vari passaggi, nessuna nuova features.
+# Occhio che quando si copiano, importano o editano gli script  necessario a non lasciare spazi
+# tra le righe di codice
+
+
+# Ver 1.0 del 20240620
+#
+# Questo script cattura la pressione del tasto mode e riconosce
+# se viene fatto un doppio click
+# Una singola pressione a wifi spento avvia l'interfaccia wifi
+# Una doppia pressione ferma tutto e azzera il conteggio
+# Una singola pressione nel periodo di attivazione del wifi non fa nulla.
+
+
+:global premuto
+:global RunAll
+:if ([:typeof $premuto] ~ "(nil|nothing)") do={
+    #E' la prima pressione allora stampa il messaggio corrispondente
+    :log info message=("Armato il pulsante ".[/system clock get time])
+    :set premuto [/system clock get time]
+    :execute {resetta}
+    :execute {enablewifiguest}
+} else={
+        # Se la variabile $premuto contiene qualcosa allora si tratta di una seconda pressione
+        # Valuta quindi se il tempo intercorso tra le due pressioni e'  maggiore di 1 secondo
+        :if (([/system/clock get time] - $premuto)<"00:00:02") do={
+            # E' una seconda pressione accettata
+            :log info message=("Attivato il reset manuale".[/system clock get time])
+            :set RunAll 0
+        } else={
+                # Se la seconda pressione e' stata troppo ritardata non fa nulla
+                :log info message=("Doppio click non rilevato ".[/system clock get time])
+          }
+  }
