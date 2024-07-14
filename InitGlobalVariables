@@ -1,0 +1,2 @@
+/system scheduler
+add name="InitGlobalVariables" on-event=SetGlobalVariables start-time=startup
