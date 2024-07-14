@@ -11,5 +11,5 @@ add name="Predisattivo" policy=read,write,policy,test source={
         /interface/ethernet/set $IfPoe poe-out=forced-on
         :delay 500ms
     }
-    /system script DeactivateWLAN
+    /system script run DeactivateWLAN
 }
