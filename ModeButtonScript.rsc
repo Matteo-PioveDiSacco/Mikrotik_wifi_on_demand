@@ -1,6 +1,7 @@
 /system script
 add name="ModeButtonScript" policy=read,write,policy,test source={
     :global ModeButtonPressCount
+    :global restart 0
     :if ([:len $ModeButtonPressCount] = 0) do={
         :set ModeButtonPressCount 0
     }
@@ -12,7 +13,14 @@ add name="ModeButtonScript" policy=read,write,policy,test source={
         /system scheduler add name=CheckDoublePress start-time=([/system clock get time]+1s) interval=0 on-event={
             :global ModeButtonPressCount
             :if ($ModeButtonPressCount = 1) do={
-                /system script run ActivateWLAN
+                :if ([/system scheduler/print count-only where name=Predisattivo]=0) do={
+                    /system script run ActivateWLAN
+                }                 
+                :if ([/system/script/job/print count-only where script=Predisattivo]=1) do={
+                    :global restart 1
+                    /system scheduler remove Predisattivo
+                    /system script run ActivateWLAN
+                }
             }
             :set ModeButtonPressCount 0
             /system scheduler remove CheckDoublePress
