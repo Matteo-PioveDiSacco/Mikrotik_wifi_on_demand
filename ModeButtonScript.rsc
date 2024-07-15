@@ -9,7 +9,7 @@ add name="ModeButtonScript" policy=read,write,policy,test source={
     
     :if ($ModeButtonPressCount = 1) do={
         :log info "Tasto MODE premuto una volta"
-        /system scheduler add name=CheckDoublePress start-time=+2s interval=0 on-event={
+        /system scheduler add name=CheckDoublePress start-time=([/system clock get time]+1s) interval=0 on-event={
             :global ModeButtonPressCount
             :if ($ModeButtonPressCount = 1) do={
                 /system script run ActivateWLAN
@@ -22,5 +22,5 @@ add name="ModeButtonScript" policy=read,write,policy,test source={
         /system script run DeactivateWLAN
         :set ModeButtonPressCount 0
         /system scheduler remove CheckDoublePress
-    }
+      }
 }
