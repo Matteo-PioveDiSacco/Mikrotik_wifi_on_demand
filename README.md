@@ -6,9 +6,19 @@ Rispetto alla versione main, questa risulta più comprensibile nel codice e quin
 
 Tuttavia, vista la fluidità di organizzazione del codice, viene premiato questo branch che viene adottato e messo in produzione.
 
-La funzione che si vuole ottenere è avere la possibilità di attivare il Wifi di un dispositivo Mikrotik con caratteristiche compatibili (ovvero deve avere il tasto <b>MODE</b> disponibile) in una modalità <b>ON-DEMAND</b>, ovvero attivo solo quando si preme il tasto.
-Inoltre, mediante una modifica hardware spiegata nel video di Youtube all'indirizzo..... il tasto <b>MODE</b> può essere messo esternamente collegando in parallelo un tasto luminoso che si illumina quando il segnale Wifi è operativo e si spegne quando il tempo a disposizione è terminato. La luminosità del tasto viene ricavata dall'energia di una porta <b>POE-OUT</b> che deve essere presente nel dispositivo.
-
+La funzione che si vuole ottenere è avere la possibilità di attivare il Wifi di un dispositivo Mikrotik con caratteristiche compatibili (ovvero deve avere il tasto <b>MODE</b> disponibile) in una modalità <b>ON-DEMAND</b>, ovvero attivo solo quando si preme il tasto che, mediante una modifica hardware spiegata nel video di Youtube all'indirizzo..... può anche essere messo esternamente collegando in parallelo un tasto luminoso che si illumina quando il segnale Wifi è operativo e si spegne quando il tempo a disposizione è terminato. La luminosità del tasto viene ricavata dall'energia di una porta <b>POE-OUT</b> che deve essere presente nel dispositivo.<br>
+<br>
+<b>COME USARE IL PULSANTE</b>
+<li> Quando il tasto viene premuto una sola volta si attiva il Wifi e il countdown inizia fino alla fine del tempo a disposizione quando il segnale wifi sarà abbattuto e la luce del pulsante si spegnerà.
+</li>
+<li> Se si preme il tasto una sola volta mentre il servizio è ancora attivo non succederà nulla e la pressione viene ignorata.
+</li>
+<li> Se si preme il tasto due volte consecutivamente mentre il servizio è attivo allora il segnale verrà subito abbattuto e il pulsante si spegnerà.
+</li>
+<li> Se viene premuto il pulsante una sola volta mentre si è nel periodo del Pre abbattimento (cioè quando la luce del pulsante lampeggia), il countdown verrà ripristinato e si ricomincerà nuovamente senza che il segnale wifi venga spento.
+</li><br>
+<br>
+<b>I FILES</b><br>
 I files contengono il codice da copiare ed incollare in una finestra terminale di RouterOS per creare gli script necessari. Vediamoli uno ad uno:
 <li>
   <b>ModeButtonScript.rsc</b><br>
