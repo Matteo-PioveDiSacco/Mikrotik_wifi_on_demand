@@ -5,5 +5,5 @@ add name="DeactivateWLAN" policy=read,write,policy,test source={
     :log info ("Disattivazione " . $wlanInterfaceName . " e azzeramento del countdown")
     /interface wireless disable $wlanInterfaceName
     /interface/ethernet/set $IfPoe poe-out=off
-    /system scheduler remove DeactivateWLAN
+    /system scheduler remove Predisattivo
 }
