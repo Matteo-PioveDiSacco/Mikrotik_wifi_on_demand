@@ -48,7 +48,7 @@ I files contengono il codice da copiare ed incollare in una finestra terminale d
   <b>wlaninterfaceName</b> -> Nome dell'interfaccia che fornisce il segnale Wifi<br>
   
   <b>IMPORTANTE</b><br>
-  Se non si prevede di riavviare il dispositivo dopo la programmazione è necessario eseguire manualmente questo script dopo aver importato tutti gli altri script nel sistema, in caso contrario verrà lanciato in automatico ad ogni reboot del sistema.
+  Se non si prevede di riavviare il dispositivo dopo la programmazione è necessario eseguire manualmente lo script <b>SetGlobalVariables.rsc</b> dopo aver importato tutti gli altri script nel sistema, in caso contrario verrà lanciato in automatico ad ogni reboot del sistema.
 </li>
 <li>
   <b>InitGlobalVariables.rsc</b><br>
