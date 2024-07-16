@@ -10,7 +10,7 @@ add name="ModeButtonScript" policy=read,write,policy,test comment="Controlla la 
     
     :if ($ModeButtonPressCount = 1) do={
         :log info "Tasto MODE premuto una volta"
-        /system scheduler add name=CheckDoublePress start-time=([/system clock get time]+1s) interval=0 on-event={
+        /system scheduler add comment="Cattura il doppio click" name=CheckDoublePress start-time=([/system clock get time]+1s) interval=0 on-event={
             :global ModeButtonPressCount
             :if ($ModeButtonPressCount = 1) do={
                 :if ([/system scheduler/print count-only where name=Predisattivo]=0) do={
