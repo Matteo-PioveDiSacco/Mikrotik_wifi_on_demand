@@ -1,5 +1,5 @@
 /system script
-add name="ModeButtonScript" policy=read,write,policy,test source={
+add name="ModeButtonScript" policy=read,write,policy,test comment="Controlla la pressione del pulsante" source={
     :global ModeButtonPressCount
     :global restart 0
     :if ([:len $ModeButtonPressCount] = 0) do={
