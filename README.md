@@ -42,10 +42,10 @@ Vediamoli uno ad uno:
   > **IMPORTANTE!**
   > Dopo aver importato tutti gli script nel sistema, se non si prevede di riavviare il dispositivo, è necessario eseguire manualmente almeno una volta lo script `SetGlobalVariables.rsc` così da settare correttamente le variabili globali, oppure, riavviando il sistema, lo script viene avviato automaticamente. Questo script viene attivato ad ogni reboot del sistema.<br>
   
-- **InitGlobalVariables.rsc**<br>
+- **Init.rsc**<br>
   Questo file non è uno script ma una raccolta di comandi che imposta l'azione di default del tasto *MODE*, e schedula il settaggio delle variabili di default ad ogni riavvio del dispositivo, può essere considerato l'ultimo comando da dare per concludere la programmazione del sistema. Dopo averlo lanciato una sola volta non è necessario farlo più, nemmeno se si riavvia il dispositivo o si esegue un aggiornamento del firmware.
 
 Quindi, in breve:<br>
   1. Importare tutti gli script.
-  2. Lanciare lo script `InitGlobalVariables.rsc`.
+  2. Lanciare lo script `Init.rsc`.
   3. Eseguire un reboot.
