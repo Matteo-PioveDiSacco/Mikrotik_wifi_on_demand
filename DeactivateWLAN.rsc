@@ -1,5 +1,5 @@
 /system script
-add name="DeactivateWLAN" policy=read,write,policy,test source={
+add name="DeactivateWLAN" policy=read,write,policy,test comment="Disattivazione del Wifi e spegnimento POE" source={
     :global wlanInterfaceName
     :global IfPoe
     :log info ("Disattivazione " . $wlanInterfaceName . " e azzeramento del countdown")
