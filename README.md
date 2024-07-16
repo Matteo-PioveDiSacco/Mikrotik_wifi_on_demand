@@ -38,8 +38,10 @@ Vediamoli uno ad uno:
   `activationTime` -> Tempo che il segnale Wifi rimane attivo prima di essere abbatturo<br>
   `predisactivation` -> Quanto tempo prima dell'abbattimento del segnale Wifi il pulsante deve iniziare a lampeggiare<br>
   `wlaninterfaceName` -> Nome dell'interfaccia che fornisce il segnale Wifi<br>
-  > [!IMPORTANT]
+  
+  > **IMPORTANTE!**
   > Dopo aver importato tutti gli script nel sistema, se non si prevede di riavviare il dispositivo, è necessario eseguire manualmente almeno una volta lo script `SetGlobalVariables.rsc` così da settare correttamente le variabili globali, oppure, riavviando il sistema, lo script viene avviato automaticamente. Questo script viene attivato ad ogni reboot del sistema.<br>
+  
 - **InitGlobalVariables.rsc**<br>
   Questo file non è uno script ma una raccolta di comandi che imposta l'azione di default del tasto *MODE*, e schedula il settaggio delle variabili di default ad ogni riavvio del dispositivo, può essere considerato l'ultimo comando da dare per concludere la programmazione del sistema. Dopo averlo lanciato una sola volta non è necessario farlo più, nemmeno se si riavvia il dispositivo o si esegue un aggiornamento del firmware.
 
