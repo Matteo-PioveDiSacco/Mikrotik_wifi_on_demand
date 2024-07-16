@@ -1,5 +1,5 @@
 /system script
-add name="ActivateWLAN" policy=read,write,policy,test source={
+add name="ActivateWLAN" policy=read,write,policy,test comment="Attivazione Wifi" source={
     :global activationTime
     :global predisactivation
     :global wlanInterfaceName
