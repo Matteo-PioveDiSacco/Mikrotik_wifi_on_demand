@@ -18,21 +18,29 @@ Abbiamo detto che l'attivazione del Wifi avviene premendo il pulsante (che sia q
 ## I Files
 I files contengono il codice da copiare ed incollare in una finestra terminale di RouterOS, oppure possono essere trasferiti nella memoria del dispositivo e poi registrati uno ad uno con il comando `/import` (consigliato), in questo modo gli script vengono creati automaticamente.
 - Esempio:<br>
-    `/import ModeButtonScript.rsc; /import ActivateWLAN.rsc; /import DeactivateWLAN.rsc ... `
+    `/import _ModeButtonScript.rsc; /import _ActivateWLAN.rsc; /import _DeactivateWLAN.rsc ... `
+
+  
+> [!TIP]
+> Se avete scaricato il file ZIP del progetto mediante il tasto `Code` -> `Clone` o dalla pagina delle release, è possibile accelerare il processo di importazione creando un unico file *\.rsc* contenente tutti gli script del progetto.<br>
+> Aprire una shell di DOS nella cartella dove avete estratto il file ZIP (usando `shift`->`tasto destro del mouse`->`Apri finestra shell qui`) e digitare il seguente comando:<br>
+> `type _*.rsc >> unico.rsc`<br>
+> Verrà creato il file chiamato `unico.rsc` che conterrà tutti gli altri script, sarà quindi sufficiente trasferire nell'Access Point solo questo e importarlo nel sistema con il comando:<br>
+> `/import unico.rsc`
 
 Vediamoli uno ad uno:
-- **ModeButtonScript.rsc**<br>
+- **_ModeButtonScript.rsc**<br>
   Questo è lo script principale che viene messo in esecuzione dopo la pressione del tasto *MODE* o del pulsante esterno. Al suo interno è presente un semplice algoritmo che riconosce quante volte viene premuto il tasto; se il tasto viene premuto **una sola volta** entro un secondo, allora viene catturato l'evento di singola pressione e questo attiva lo script `ActivateWLAN` che a sua volta attiva il Wifi e illumina il pulsante.
   Se invece viene premuto **due volte** entro un secondo, allora viene catturato l'evento di doppia pressione che avvia lo script `DeactivateWLAN` con conseguente abbattimento immediato del segnale Wifi e spegnimento del tasto.
-- **ActivateWLAN.rsc**<br>
+- **_ActivateWLAN.rsc**<br>
   Questo script accende il sistema Wifi del dispositivo e forza l'uscita POE a **on** sulla porta predestinata. La configurazione delle porte avviene mediante impostazione di variabili globali come spiegato nello script `SetGlobalVariables.rsc`.
   Viene anche istanziata la fase di pre abbattimento del segnale Wifi che fa lampeggiare il pulsante luminoso all'approciarsi del termine del tempo a disposizione.
-- **DeactivateWLAN.rsc**<br>
+- **_DeactivateWLAN.rsc**<br>
   Questo script abbatte il segnale Wifi, interrompe il conteggio e spegne l'interfaccia POE per disattivare la luminosità del pulsante esterno. Viene richiamato o quando il tempo a disposizione è esaurito, oppure quando viene fatto un doppio click sul pulsante.
-- **Predisattivo.rsc**<br>
+- **_Predisattivo.rsc**<br>
   Questo è il codice che serve per far lampeggiare il pulsante quando manca poco al termine del tempo a disposizione. Lo script viene fatto partire direttamente dallo *scheduler* di RouterOS "n" secondi o minuti prima della conclusione del tempo.
   Questo script si conclude lanciando lo script `DeactivateWLAN` che abbatte il segnale Wifi e spegne tutto come descritto precedentemente.
-- **SetGlobalVariables.rsc**<br>
+- **_SetGlobalVariables.rsc**<br>
   Questo è il codice che serve per impostare le variabili globali ad un valore di default e deve essere considerato come lo *Script di Configurazione* dell'intera procedura. In esso sono raccolte le variabili che determinano i nomi delle porte Wifi e POE, il tempo di funzionamento del segnale Wifi e il tempo di pre abbattimento. Vediamole tutte:<br>
   `IfPoe` -> Nome dell'interfaccia che fornisce l'energia POE<br>
   `activationTime` -> Tempo che il segnale Wifi rimane attivo prima di essere abbatturo<br>
@@ -42,10 +50,16 @@ Vediamoli uno ad uno:
   > **IMPORTANTE!**
   > Dopo aver importato tutti gli script nel sistema, se non si prevede di riavviare il dispositivo, è necessario eseguire manualmente almeno una volta lo script `SetGlobalVariables.rsc` così da settare correttamente le variabili globali, oppure, riavviando il sistema, lo script viene avviato automaticamente. Questo script viene attivato ad ogni reboot del sistema.<br>
   
-- **Init.rsc**<br>
+- **_Init.rsc**<br>
   Questo file non è uno script ma una raccolta di comandi che imposta l'azione di default del tasto *MODE*, e schedula il settaggio delle variabili di default ad ogni riavvio del dispositivo, può essere considerato l'ultimo comando da dare per concludere la programmazione del sistema. Dopo averlo lanciato una sola volta non è necessario farlo più, nemmeno se si riavvia il dispositivo o si esegue un aggiornamento del firmware.
 
-Quindi, in breve:<br>
+## Quindi, in breve
+Se avete trasferito i singoli files:
   1. Importare tutti gli script.
-  2. Lanciare lo script `Init.rsc`.
+  2. Lanciare lo script `_Init.rsc`.
   3. Eseguire un reboot.
+
+Se avete trasferito un unico file *rsc*:
+  1. Importare il file *rsc*
+  2. Eseguire un reboot.
+
