@@ -21,5 +21,8 @@ Tutta questa parte viene spiegata bene in un video di Youtube all'indirizzo.....
 </li>
 <li>
   <b>enablewifiguest</b><br>
+  E' lo script che abilita fisicamente l'interfaccia Wifi secondo il valore contenuto nella variabile "interfaccia" dichiarata all'inizio del codice.
+  Questo codice viene lanciato dallo script "pulsante" e rimane in esecuzione in loop fino all'azzeramento del tempo impostato (settato nella variabile "tempo") oppure finchè la variabile globale "$RunAll" rimane a 1.
+  Viene anche gestito il lampeggio di avviso che si attiva prima dell'abbattimento del segnale wifi (variabile "$AlertDown")
   
 </li>
