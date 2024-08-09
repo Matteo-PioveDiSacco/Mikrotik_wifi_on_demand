@@ -1,8 +1,8 @@
 # Mikrotik_wifi_on_demand
 Tutti gli script Mikrotik necessari ad attivare il Wifi di un Access Point Mikrotik mediante pulsante esterno che si illuminerà grazie all'energia ricavata da una porta POE OUT disponibile sullo stesso dispositivo.
 
-1. [Introduzione] (#Introduzione)
-2. [Scopo del progetto] (#Scopo del progetto)
+1. [Introduzione](#Introduzione)
+2. [Scopo del progetto](#Scopo_del_progetto)
 
 ## Introduzione <a name="introduzione"></a>
 La soluzione proposta in questo branch è stata elaborata dall'AI ChatGPT e poi raffinata e corretta da me.
