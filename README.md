@@ -4,11 +4,11 @@ Tutti gli script Mikrotik necessari ad attivare il Wifi di un Access Point Mikro
 1. [Introduzione] (#Introduzione)
 2. [Scopo del progetto] (#Scopo del progetto)
 
-## Introduzione
+## Introduzione <a name="introduzione"></a>
 La soluzione proposta in questo branch è stata elaborata dall'AI ChatGPT e poi raffinata e corretta da me.
 Rispetto alla versione main, questa risulta più comprensibile nel codice e quindi più personalizzabile, tuttavia necessita di più files e l'attivazione del dispositivo avviene dopo 1 secondi dalla pressione del tasto, questo potrebbe portare ad involontarie doppie pressioni che quindi disattiverebbero il funzionamento creando in questo modo delle anomalie.
 Tuttavia, vista la fluidità di organizzazione del codice, viene premiato questo branch che viene adottato e messo in produzione.
-## Scopo del progetto
+## Scopo del progetto <a name="Scopo del progetto"></a>
 La funzione che si vuole ottenere è avere la possibilità di attivare il Wifi di un dispositivo Mikrotik con caratteristiche compatibili (ovvero deve avere il tasto *MODE* disponibile) in una modalità **ON-DEMAND**, ovvero attivo solo quando si preme il tasto *MODE* il quale, mediante una modifica hardware spiegata nel video di Youtube all'indirizzo https://youtu.be/XibX0iqkqoo , può anche essere messo esternamente collegando in parallelo un tasto luminoso che si illumina quando il segnale Wifi è operativo e si spegne quando il tempo a disposizione è terminato. La luminosità del tasto viene ricavata dall'energia di una porta *POE-OUT* che deve essere presente nel dispositivo.
 
 ## Come usare il Pulsante
