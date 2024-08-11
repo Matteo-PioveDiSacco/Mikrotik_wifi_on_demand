@@ -4,14 +4,14 @@ Tutti gli script Mikrotik necessari ad attivare il Wifi di un Access Point Mikro
 1. [Introduzione](#Introduzione)
 2. [Scopo del progetto](#Scopo_del_progetto)
 3. [Come usare il Pulsante](#Come_usare_il_Pulsante)
-4. [I Files](#I_Files)
-   4.1 [_ModeButtonScript.rsc](#_ModeButtonScript.rsc)
-   4.2 [_ActivateWLAN.rsc](#_ActivateWLAN.rsc)
-   4.3 [_DeactivateWLAN.rsc](#_DeactivateWLAN.rsc)
-   4.4 [_Predisattivo.rsc](#_Predisattivo.rsc)
-   4.5 [_SetGlobalVariables.rsc](#_SetGlobalVariables.rsc)
-   4.6 [_SetGlobalVariables.rsc](#_SetGlobalVariables.rsc)
-   4.7 [_Init.rsc](#_Init.rsc)
+4. [I Files](#I_Files)<br>
+   4.1 [_ModeButtonScript.rsc](#_ModeButtonScript.rsc)<br>
+   4.2 [_ActivateWLAN.rsc](#_ActivateWLAN.rsc)<br>
+   4.3 [_DeactivateWLAN.rsc](#_DeactivateWLAN.rsc)<br>
+   4.4 [_Predisattivo.rsc](#_Predisattivo.rsc)<br>
+   4.5 [_SetGlobalVariables.rsc](#_SetGlobalVariables.rsc)<br>
+   4.6 [_SetGlobalVariables.rsc](#_SetGlobalVariables.rsc)<br>
+   4.7 [_Init.rsc](#_Init.rsc)<br>
 5. [Quindi, in breve](#Quindi_in_breve)
 6. [Altre Considerazioni](#Altre_Considerazioni)
    
@@ -37,7 +37,7 @@ I files contengono il codice da copiare ed incollare in una finestra terminale d
     `/import _ModeButtonScript.rsc; /import _ActivateWLAN.rsc; /import _DeactivateWLAN.rsc ... `
 
   
-> [:bulb: Consiglio]
+> :bulb: **Consiglio**<br>
 > Se avete scaricato il file ZIP del progetto mediante il tasto `Code` -> `Clone` o dalla pagina delle release, è possibile accelerare il processo di importazione creando un unico file *\.rsc* contenente tutti gli script del progetto.<br>
 > Aprire una shell di DOS nella cartella dove avete estratto il file ZIP (usando `shift`->`tasto destro del mouse`->`Apri finestra shell qui`) e digitare il seguente comando:<br>
 > `type _*.rsc >> unico.rsc`<br>
@@ -63,7 +63,7 @@ Vediamoli uno ad uno:
   `predisactivation` -> Quanto tempo prima dell'abbattimento del segnale Wifi il pulsante deve iniziare a lampeggiare<br>
   `wlaninterfaceName` -> Nome dell'interfaccia che fornisce il segnale Wifi<br>
   
-  >:warning: **IMPORTANTE!**
+  >:warning: **IMPORTANTE!**<br>
   > Dopo aver importato tutti gli script nel sistema, se non si prevede di riavviare il dispositivo, è necessario eseguire manualmente almeno una volta lo script `SetGlobalVariables.rsc` così da settare correttamente le variabili globali, oppure, riavviando il sistema, lo script viene avviato automaticamente. Questo script viene attivato ad ogni reboot del sistema.<br>
   
 - **_Init.rsc** <a name="_Init.rsc"></a><br>
@@ -79,7 +79,7 @@ Se avete trasferito un unico file *rsc*:
   1. Importare il file *rsc*
   2. Eseguire un reboot.
 
-# Altre Considerazioni
+# Altre Considerazioni <a name="Altre_Considerazioni"></a>
 Alcuni particolari non sono stati menzionati nel video di Youtube per non dilungare ulteriormente i filmati, tuttavia ci sono alcune cose da sapere per fare in modo che il progetto funzioni a meraviglia.
 
 1. [Luce fantasma nel pulsante](#lucefantasma)
@@ -98,3 +98,11 @@ Il trigger si può realizzare in due modi, entrambi semplici ed economici:
 ### Soluzione con circuito integrato LM311 <a name="lm311"></a>
 
 ### Soluzione con transistor 2N2222 <a name="2n2222"></a>
+![Trigger 2N2222](https://github.com/user-attachments/assets/87499f23-f104-496d-b2eb-e72d20994a57)<br>
+Questa soluzione prevede l'uso di alcuni componenti discreti di facile reperibilità, un transistor 2N2222 (o similari) e due resistenze da 1/4 di Watt da 10K e 1K Ohm.
+Se diamo per assunto che l'ingresso POE può variare da 12V a 24V, il valore delle due resistenze fanno si che la polarizzazione del transistor avvenga sempre nella zona di saturazione, in questo modo, quando il segnale POE è attivo, la tensione che si forma ai capi della resistenza tra Base ed Emettitore (1K Ohm), assume un valore che satura il transistor permettendo il passaggio della corrente tra Collettore ed Emettitore accendendo totalmente il LED del pulsante.
+Quando il segnale POE è disattivato, la corrente residua che entra nel trigger non è sufficiente a polarizzare il transistor in saturazione e pertanto la corrente tra Collettore ed Emettitore risulta nulla e il LED del pulsante rimane totalmente spento.
+>:warning: **ATTENZIONE!**<br>
+>Il LED necessita di una corrente di 20mA per il funzionamento.
+>Ricordarsi di fare attenzione alla tensione di uscita verso il LED del pulsante, se l'access point viene alimentato a 12V, il LED funzionerà senza alcun limitatore, se invece l'access point viene alimentato a 24V allora sarà necessario inserire un limitatore (resistenza in serie) da 600 Ohm per evitare la rottura del LED.
+
