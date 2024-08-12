@@ -2,9 +2,9 @@
 Tutti gli script Mikrotik necessari ad attivare il Wifi di un Access Point Mikrotik mediante pulsante esterno che si illuminerà grazie all'energia ricavata da una porta POE OUT disponibile sullo stesso dispositivo.
 
 1. [Introduzione](#introduzione)
-2. [Scopo del progetto](#Scopo_del_progetto)
-3. [Come usare il Pulsante](#Come_usare_il_Pulsante)
-4. [I Files](#I_Files)<br>
+2. [Scopo del progetto](#scopo_del_progetto)
+3. [Come usare il Pulsante](#come_usare_il_Pulsante)
+4. [I Files](#i_files)<br>
    4.1 [_ModeButtonScript.rsc](#_ModeButtonScript.rsc)<br>
    4.2 [_ActivateWLAN.rsc](#_ActivateWLAN.rsc)<br>
    4.3 [_DeactivateWLAN.rsc](#_DeactivateWLAN.rsc)<br>
@@ -12,8 +12,8 @@ Tutti gli script Mikrotik necessari ad attivare il Wifi di un Access Point Mikro
    4.5 [_SetGlobalVariables.rsc](#_SetGlobalVariables.rsc)<br>
    4.6 [_SetGlobalVariables.rsc](#_SetGlobalVariables.rsc)<br>
    4.7 [_Init.rsc](#_Init.rsc)<br>
-5. [Quindi, in breve](#Quindi_in_breve)
-6. [Altre Considerazioni](#Altre_Considerazioni)
+5. [Quindi, in breve](#quindi_in_breve)
+6. [Altre Considerazioni](#altre_Considerazioni)
    
 
 
@@ -21,17 +21,17 @@ Tutti gli script Mikrotik necessari ad attivare il Wifi di un Access Point Mikro
 La soluzione proposta in questo branch è stata elaborata dall'AI ChatGPT e poi raffinata e corretta da me.
 Rispetto alla versione main, questa risulta più comprensibile nel codice e quindi più personalizzabile, tuttavia necessita di più files e l'attivazione del dispositivo avviene dopo 1 secondi dalla pressione del tasto, questo potrebbe portare ad involontarie doppie pressioni che quindi disattiverebbero il funzionamento creando in questo modo delle anomalie.
 Tuttavia, vista la fluidità di organizzazione del codice, viene premiato questo branch che viene adottato e messo in produzione.
-## Scopo del progetto <a name="Scopo_del_progetto"></a>
+## Scopo del progetto <a name="scopo_del_progetto"></a>
 La funzione che si vuole ottenere è avere la possibilità di attivare il Wifi di un dispositivo Mikrotik con caratteristiche compatibili (ovvero deve avere il tasto *MODE* disponibile) in una modalità **ON-DEMAND**, ovvero attivo solo quando si preme il tasto *MODE* il quale, mediante una modifica hardware spiegata nel video di Youtube all'indirizzo https://youtu.be/XibX0iqkqoo , può anche essere messo esternamente collegando in parallelo un tasto luminoso che si illumina quando il segnale Wifi è operativo e si spegne quando il tempo a disposizione è terminato. La luminosità del tasto viene ricavata dall'energia di una porta *POE-OUT* che deve essere presente nel dispositivo.
 
-## Come usare il Pulsante <a name="Come_usare_il_Pulsante"></a>
+## Come usare il Pulsante <a name="come_usare_il_Pulsante"></a>
 Abbiamo detto che l'attivazione del Wifi avviene premendo il pulsante (che sia quello embedded o quello esterno luminoso aggiunto), tuttavia sono disponibili alcune combinazioni di pressione che producono diverse azioni:
 - Quando il tasto viene premuto **una sola volta** si attiva il Wifi e il countdown inizia fino alla fine del tempo a disposizione quando il segnale wifi sarà abbattuto e la luce del pulsante si spegnerà.
 - Se si preme il tasto **una sola volta** mentre il Wifi **è attivo** non succederà nulla e la pressione viene ignorata.
 - Se si preme il tasto **due volte consecutivamente** mentre il servizio **è attivo** allora il segnale verrà subito abbattuto e il pulsante si spegnerà.
 - Se viene premuto il pulsante **una sola volta** mentre si è nel periodo del **pre abbattimento** (cioè quando la luce del pulsante lampeggia), il countdown verrà ripristinato e si ricomincerà nuovamente senza che il segnale Wifi venga spento.
 
-## I Files <a name="I_Files"></a>
+## I Files <a name="i_files"></a>
 I files contengono il codice da copiare ed incollare in una finestra terminale di RouterOS, oppure possono essere trasferiti nella memoria del dispositivo e poi registrati uno ad uno con il comando `/import` (consigliato), in questo modo gli script vengono creati automaticamente.
 - Esempio:<br>
     `/import _ModeButtonScript.rsc; /import _ActivateWLAN.rsc; /import _DeactivateWLAN.rsc ... `
@@ -69,7 +69,7 @@ Vediamoli uno ad uno:
 - **_Init.rsc** <a name="_Init.rsc"></a><br>
   Questo file non è uno script ma una raccolta di comandi che imposta l'azione di default del tasto *MODE*, e schedula il settaggio delle variabili di default ad ogni riavvio del dispositivo, può essere considerato l'ultimo comando da dare per concludere la programmazione del sistema. Dopo averlo lanciato una sola volta non è necessario farlo più, nemmeno se si riavvia il dispositivo o si esegue un aggiornamento del firmware.
 
-## Quindi, in breve <a name="Quindi_in_breve"></a>
+## Quindi, in breve <a name="quindi_in_breve"></a>
 Se avete trasferito i singoli files:
   1. Importare tutti gli script.
   2. Lanciare lo script `_Init.rsc`.
@@ -79,7 +79,7 @@ Se avete trasferito un unico file *rsc*:
   1. Importare il file *rsc*
   2. Eseguire un reboot.
 
-# Altre Considerazioni <a name="Altre_Considerazioni"></a>
+# Altre Considerazioni <a name="altre_Considerazioni"></a>
 Alcuni particolari non sono stati menzionati nel video di Youtube per non dilungare ulteriormente i filmati, tuttavia ci sono alcune cose da sapere per fare in modo che il progetto funzioni a meraviglia.
 
 1. [Luce fantasma nel pulsante](#lucefantasma)
