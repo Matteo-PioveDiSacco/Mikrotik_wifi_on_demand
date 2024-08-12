@@ -3,7 +3,7 @@ Tutti gli script Mikrotik necessari ad attivare il Wifi di un Access Point Mikro
 
 1. [Introduzione](#introduzione)
 2. [Scopo del progetto](#scopo_del_progetto)
-3. [Come usare il Pulsante](#come_usare_il_Pulsante)
+3. [Come usare il Pulsante](#come_usare_il_pulsante)
 4. [I Files](#i_files)<br>
    4.1 [_ModeButtonScript.rsc](#_ModeButtonScript.rsc)<br>
    4.2 [_ActivateWLAN.rsc](#_ActivateWLAN.rsc)<br>
@@ -13,7 +13,7 @@ Tutti gli script Mikrotik necessari ad attivare il Wifi di un Access Point Mikro
    4.6 [_SetGlobalVariables.rsc](#_SetGlobalVariables.rsc)<br>
    4.7 [_Init.rsc](#_Init.rsc)<br>
 5. [Quindi, in breve](#quindi_in_breve)
-6. [Altre Considerazioni](#altre_Considerazioni)
+6. [Altre Considerazioni](#altre_considerazioni)
    
 
 
@@ -24,7 +24,7 @@ Tuttavia, vista la fluidità di organizzazione del codice, viene premiato questo
 ## Scopo del progetto <a name="scopo_del_progetto"></a>
 La funzione che si vuole ottenere è avere la possibilità di attivare il Wifi di un dispositivo Mikrotik con caratteristiche compatibili (ovvero deve avere il tasto *MODE* disponibile) in una modalità **ON-DEMAND**, ovvero attivo solo quando si preme il tasto *MODE* il quale, mediante una modifica hardware spiegata nel video di Youtube all'indirizzo https://youtu.be/XibX0iqkqoo , può anche essere messo esternamente collegando in parallelo un tasto luminoso che si illumina quando il segnale Wifi è operativo e si spegne quando il tempo a disposizione è terminato. La luminosità del tasto viene ricavata dall'energia di una porta *POE-OUT* che deve essere presente nel dispositivo.
 
-## Come usare il Pulsante <a name="come_usare_il_Pulsante"></a>
+## Come usare il Pulsante <a name="come_usare_il_pulsante"></a>
 Abbiamo detto che l'attivazione del Wifi avviene premendo il pulsante (che sia quello embedded o quello esterno luminoso aggiunto), tuttavia sono disponibili alcune combinazioni di pressione che producono diverse azioni:
 - Quando il tasto viene premuto **una sola volta** si attiva il Wifi e il countdown inizia fino alla fine del tempo a disposizione quando il segnale wifi sarà abbattuto e la luce del pulsante si spegnerà.
 - Se si preme il tasto **una sola volta** mentre il Wifi **è attivo** non succederà nulla e la pressione viene ignorata.
@@ -79,7 +79,7 @@ Se avete trasferito un unico file *rsc*:
   1. Importare il file *rsc*
   2. Eseguire un reboot.
 
-# Altre Considerazioni <a name="altre_Considerazioni"></a>
+# Altre Considerazioni <a name="altre_considerazioni"></a>
 Alcuni particolari non sono stati menzionati nel video di Youtube per non dilungare ulteriormente i filmati, tuttavia ci sono alcune cose da sapere per fare in modo che il progetto funzioni a meraviglia.
 
 1. [Luce fantasma nel pulsante](#lucefantasma)
