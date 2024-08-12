@@ -1,7 +1,7 @@
 # Mikrotik_wifi_on_demand
 Tutti gli script Mikrotik necessari ad attivare il Wifi di un Access Point Mikrotik mediante pulsante esterno che si illuminerà grazie all'energia ricavata da una porta POE OUT disponibile sullo stesso dispositivo.
 
-1. [Introduzione](#Introduzione)
+1. [Introduzione](#introduzione)
 2. [Scopo del progetto](#Scopo_del_progetto)
 3. [Come usare il Pulsante](#Come_usare_il_Pulsante)
 4. [I Files](#I_Files)<br>
@@ -83,26 +83,55 @@ Se avete trasferito un unico file *rsc*:
 Alcuni particolari non sono stati menzionati nel video di Youtube per non dilungare ulteriormente i filmati, tuttavia ci sono alcune cose da sapere per fare in modo che il progetto funzioni a meraviglia.
 
 1. [Luce fantasma nel pulsante](#lucefantasma)
-
-
-
+2. [Limitazione della corrente di uscita](#limitatore)
 
 ## Luce fantasma nel pulsante <a name="lucefantasma"></a>
 Purtroppo, prendere la tensione dall'uscita POE del Mikrotik introduce uno scomodo contrattempo che riguarda la tensione a vuoto della porta POE che non è a 0 volt.
-Questa caratteristica infatti fa si che il LED del pulsante rimanga leggermente illuminato anche se la porta del dispositivo è settata logicamente ad *Off*, tuttavia questa anomalia si può facilmente correggere ma sono necessari alcuni componenti elettronici discreti.
+Questa caratteristica infatti fa si che il LED del pulsante rimanga leggermente illuminato anche se la porta del dispositivo è settata logicamente ad *Off*, tuttavia questa anomalia si può facilmente correggere ma sono necessari alcuni componenti elettronici discreti da inserire esternamente.
 La soluzione al problema è inserire un trigger in serie al pulsante, questo dispositivo consente di mantenere a 0 la corrente in uscita fino al raggiungimento di una determinata soglia in entrata, in questo modo viene garantito che solo quando l'access point porta il segnale POE ad *On*, il LED del pulsante viene pienamente alimentato e quindi illuminato. 
 Il trigger si può realizzare in due modi, entrambi semplici ed economici:
-- [1](#lm311) Mediante circuito integrato LM 311 [DataSheet](https://www.ti.com/lit/ds/symlink/lm311.pdf), [Acquisto](https://amzn.eu/d/3Qrb7ls)
+- [1](#lm358) Mediante circuito integrato LM 358 [DataSheet](https://www.intellisys.it/media/wysiwyg/ElectronicStore/LM358N_Eng_Datasheet.pdf), [Acquisto](https://amzn.eu/d/hR5NFCF)
 - [2](#2n2222) Mediante transistor BJT NPN 2N2222 [DataSheet](https://pdf1.alldatasheetit.com/datasheet-pdf/view/21675/STMICROELECTRONICS/2N2222.html), [Acquisto](https://amzn.eu/d/9IYCCg6)
 
-### Soluzione con circuito integrato LM311 <a name="lm311"></a>
+### Soluzione con circuito integrato LM358 <a name="lm358"></a>
+![Trigger LM358](https://github.com/user-attachments/assets/7c8d42ac-2b2c-4d1e-8149-095f205bf150)<br>
+Questa soluzione, che è quella consigliata, prevede l'impiego di un amplificatore operazionale `LM358` il quale può lavorare con tensioni che vanno da pochi volt fino a 35V, quindi uno spettro molto ampio, compatibile con la maggior parte dei dispositivi Mikrotik.
+La corrente residua che esce dall'access point quando il POE è disattivato, viene suddivisa tra l'alimentazione dell' amp.op. e la resistenza da 10K Ohm, in questo modo l'amplificatore operazionale non riesce a funzionare perchè sottoalimentato e, pertanto, non fornisce alcuna corrente in uscita.
+Quando il segnale POE viene portato a livello attivo, l'amp.op. viene correttamente alimentato, la configurazione scelta con l'ingresso positivo collegato all'alimentazione lo porta direttamente alla saturazione fornendo in uscita tutta la corrente necessaria per l'accensione del LED del pulsante luminoso.<br>
+**PRO**
+- Questa soluzione prevede pochissimi componenti.
+- L'alimentazione ad ampio spettro fa si che si possa utilizzare la configurazione mostrata senza variare il valore dei componenti a prescindere dalla tensione di alimentazione.
+- Essendo che l'integrato `LM358` è montato su uno zoccolo, è possibile sostituirlo facilmente in caso di guasto.<br>
+
+**CONTRO**
+- L'utilizzo dello zoccolo rende più laborioso il collegamento dei cavetti di cablaggio.
+- Nella maggior parte dei casi sarà necessario acquistare l'integrato `LM358`.
+
+> ⚠️**ATTENZIONE!**<br>
+> Il LED del pulsante necessita di una tensione di 12V e una corrente di 20mA per il funzionamento.
+> Ricordarsi di fare attenzione alla tensione di uscita del POE controllando che non superi i 12V richiesti dal LED. In caso di alimentazione con tensione superiore è necessario prevedere l'uso di un [limitatore](#limitatore).
 
 ### Soluzione con transistor 2N2222 <a name="2n2222"></a>
 ![Trigger 2N2222](https://github.com/user-attachments/assets/87499f23-f104-496d-b2eb-e72d20994a57)<br>
-Questa soluzione prevede l'uso di alcuni componenti discreti di facile reperibilità, un transistor 2N2222 (o similari) e due resistenze da 1/4 di Watt da 10K e 1K Ohm.
+Questa soluzione prevede l'uso di alcuni componenti discreti di facile reperibilità, un transistor `2N2222` (o similari) e due resistenze da 1/4 di Watt da 10K e 1K Ohm.
 Se diamo per assunto che l'ingresso POE può variare da 12V a 24V, il valore delle due resistenze fanno si che la polarizzazione del transistor avvenga sempre nella zona di saturazione, in questo modo, quando il segnale POE è attivo, la tensione che si forma ai capi della resistenza tra Base ed Emettitore (1K Ohm), assume un valore che satura il transistor permettendo il passaggio della corrente tra Collettore ed Emettitore accendendo totalmente il LED del pulsante.
 Quando il segnale POE è disattivato, la corrente residua che entra nel trigger non è sufficiente a polarizzare il transistor in saturazione e pertanto la corrente tra Collettore ed Emettitore risulta nulla e il LED del pulsante rimane totalmente spento.
->:warning: **ATTENZIONE!**<br>
->Il LED necessita di una corrente di 20mA per il funzionamento.
->Ricordarsi di fare attenzione alla tensione di uscita verso il LED del pulsante, se l'access point viene alimentato a 12V, il LED funzionerà senza alcun limitatore, se invece l'access point viene alimentato a 24V allora sarà necessario inserire un limitatore (resistenza in serie) da 600 Ohm per evitare la rottura del LED.
+<br>
+**PRO**
+- Questa soluzione prevede pochi componenti, probabilmente canibalizzabili da vecchi apparecchi.
+- Si applica con facilità in serie a tutto il circuito.<br>
 
+**CONTRO**
+- Il valore delle resistenze dovrebbe essere ricalcolato in caso di alimentazioni diverse dalle canoniche `12V` e `24V`.
+
+> ⚠️ **ATTENZIONE!**<br>
+> Il LED del pulsante necessita di una tensione di 12V e una corrente di 20mA per il funzionamento.
+> Ricordarsi di fare attenzione alla tensione di uscita del POE controllando che non superi i 12V richiesti dal LED. In caso di alimentazione con tensione superiore è necessario prevedere l'uso di un [**limitatore**](#limitatore).
+
+
+<br>
+
+## Limitazione della corrente di uscita <a name="limitatore"></a>
+Il tasto luminoso che è stato consigliato nel video di Youtube, lavora con una tensione di 12V e una corrente nominale di 20mA, pertanto è necessario tenerne conto quando lo si connette all'uscita POE dell'access point.
+Se il dispositivo viene alimentato con tensione di 12V allora l'uscita POE sarà al massimo 12V e quindi non sarà necessario prevedere alcun limitatore, altrimenti, in base all'alimentazione utilizzata, sarà necessario inserire una resistenza limitatrice per assicurare che la corrente in uscita non superi i 20mA.
+Nel caso di alimentazione a 24V, è possibile inserire una resistenza da 600 Ohm 1/2 Watt.
