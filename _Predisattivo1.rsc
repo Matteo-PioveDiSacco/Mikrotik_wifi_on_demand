@@ -1,5 +1,5 @@
 /system script
-add name="Predisattivo" policy=read,write,policy,test comment="Lampeggio del pulsante" source={
+add name="Predisattivo1" policy=read,write,policy,test comment="Lampeggio del pulsante" source={
     :global predisactivation
     :global wlanInterfaceName
     :global IfPoe
