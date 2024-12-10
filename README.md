@@ -8,9 +8,10 @@ Tutti gli script Mikrotik necessari ad attivare il Wifi di un Access Point Mikro
    4.1 [_ModeButtonScript.rsc](#_ModeButtonScript.rsc)<br>
    4.2 [_ActivateWLAN.rsc](#_ActivateWLAN.rsc)<br>
    4.3 [_DeactivateWLAN.rsc](#_DeactivateWLAN.rsc)<br>
-   4.4 [_Predisattivo.rsc](#_Predisattivo.rsc)<br>
-   4.5 [_SetGlobalVariables.rsc](#_SetGlobalVariables.rsc)<br>
-   4.6 [_Init.rsc](#_Init.rsc)<br>
+   4.4 [_Predisattivo1.rsc](#_Predisattivo1.rsc)<br>
+   4.5 [_Predisattivo2.rsc](#_Predisattivo2.rsc)<br>
+   4.6 [_SetGlobalVariables.rsc](#_SetGlobalVariables.rsc)<br>
+   4.7 [_Init.rsc](#_Init.rsc)<br>
 5. [Quindi, in breve](#quindi_in_breve)
 6. [Altre Considerazioni](#altre_considerazioni)
    
@@ -56,32 +57,39 @@ Vediamoli uno ad uno:
   Viene anche istanziata la fase di pre abbattimento del segnale Wifi che fa lampeggiare il pulsante luminoso all'approciarsi del termine del tempo a disposizione.
 - **_DeactivateWLAN.rsc** <a name="_DeactivateWLAN.rsc"></a><br>
   Questo script abbatte il segnale Wifi, interrompe il conteggio e spegne l'interfaccia POE per disattivare la luminosità del pulsante esterno. Viene richiamato o quando il tempo a disposizione è esaurito, oppure quando viene fatto un doppio click sul pulsante.
-- **_Predisattivo.rsc** <a name="_Predisattivo.rsc"></a><br>
-  Questo è il codice che serve per far lampeggiare il pulsante quando manca poco al termine del tempo a disposizione. Lo script viene fatto partire direttamente dallo *scheduler* di RouterOS "n" secondi o minuti prima della conclusione del tempo.
-  Questo script si conclude lanciando lo script `DeactivateWLAN` che abbatte il segnale Wifi e spegne tutto come descritto precedentemente.
+- **_Predisattivo1.rsc** <a name="_Predisattivo1.rsc"></a><br>
+  Questo è il codice che serve per far lampeggiare il pulsante quando manca poco al termine del tempo a disposizione. Lo script viene fatto partire direttamente dallo *scheduler* di RouterOS "n" secondi o minuti prima della conclusione del tempo e viene richiamato solo se nel router è installato il pacchetto `wireless` per la gestione del wifi.
+  Quando il segnale Wifi viene abbattuto da `DeactivateWLAN` questo script viene eliminato.
+- **_Predisattivo2.rsc** <a name="_Predisattivo2.rsc"></a><br>
+Questo è il codice che serve per far lampeggiare il pulsante quando manca poco al termine del tempo a disposizione. Lo script viene fatto partire direttamente dallo *scheduler* di RouterOS "n" secondi o minuti prima della conclusione del tempo e viene richiamato solo se nel router è installato il pacchetto `vifi-qcom` per la gestione del wifi.
+  Quando il segnale Wifi viene abbattuto dallo script `DeactivateWLAN` questo script viene eliminato.
 - **_SetGlobalVariables.rsc** <a name="_SetGlobalVariables.rsc"></a><br>
   Questo è il codice che serve per impostare le variabili globali ad un valore di default e deve essere considerato come lo *Script di Configurazione* dell'intera procedura. In esso sono raccolte le variabili che determinano i nomi delle porte Wifi e POE, il tempo di funzionamento del segnale Wifi e il tempo di pre abbattimento. Vediamole tutte:<br>
   `IfPoe` -> Nome dell'interfaccia che fornisce l'energia POE<br>
   `activationTime` -> Tempo che il segnale Wifi rimane attivo prima di essere abbatturo<br>
   `predisactivation` -> Quanto tempo prima dell'abbattimento del segnale Wifi il pulsante deve iniziare a lampeggiare<br>
   <a name="nomeinterfacciawifi"></a>
-  `wlaninterfaceName` -> Nome dell'interfaccia che fornisce il segnale Wifi<br>
+  `wlaninterfaceName` -> Nome dell'interfaccia che fornisce il segnale Wifi, fare attenzione al nome perchè a seconda del pacchetto di gestione della Wifi installato il nome dell'interfaccia cambia:<br>
+  **wlan** nel caso sia installato il pacchetto `wireless`;  
+  **wifi** nel caso sia installato il pacchetto `wifi-qcom`  
   
   >:warning: **IMPORTANTE!**<br>
   > Dopo aver importato tutti gli script nel sistema, se non si prevede di riavviare il dispositivo, è necessario eseguire manualmente almeno una volta lo script `SetGlobalVariables.rsc` così da settare correttamente le variabili globali, oppure, riavviando il sistema, lo script viene avviato automaticamente. Questo script viene attivato ad ogni reboot del sistema.<br>
   
 - **_Init.rsc** <a name="_Init.rsc"></a><br>
-  Questo file non è uno script ma una raccolta di comandi che imposta l'azione di default del tasto *MODE*, e schedula il settaggio delle variabili di default ad ogni riavvio del dispositivo, può essere considerato l'ultimo comando da dare per concludere la programmazione del sistema. Dopo averlo lanciato una sola volta non è necessario farlo più, nemmeno se si riavvia il dispositivo o si esegue un aggiornamento del firmware.
+  Questo script deve essere lanciato solamente una volta dopo l'importazione degli altri script, la sua funzione è di impostare l'azione di default del tasto *MODE* e schedulare il settaggio delle variabili di default ad ogni riavvio del dispositivo, può essere considerato l'ultimo comando da dare per concludere la programmazione del sistema. Come si diceva, dopo averlo lanciato una volta non è necessario farlo più, nemmeno se si riavvia il dispositivo o si esegue un aggiornamento del firmware.
 
 ## Quindi, in breve <a name="quindi_in_breve"></a>
 Se avete trasferito i singoli files:
   1. Importare tutti gli script.
-  2. Lanciare lo script `_Init.rsc`.
-  3. Eseguire un reboot.
+  2. Configurare la giusta variabile `wlaninterfaceName` come visto [precedentemente](#nomeinterfacciawifi).
+  3. Lanciare lo script `_Init.rsc`.
+  4. Eseguire un reboot.
 
 Se avete trasferito un unico file *rsc*:
-  1. Importare il file *rsc*
-  2. Eseguire un reboot.
+  1. Importare il file *rsc*.
+  2. Configurare la giusta variabile `wlaninterfaceName` come visto [precedentemente](#nomeinterfacciawifi).
+  3. Eseguire un reboot.
 
 # Altre Considerazioni <a name="altre_considerazioni"></a>
 Alcuni particolari non sono stati menzionati nel video di Youtube per non dilungare ulteriormente i filmati, tuttavia ci sono alcune cose da sapere per fare in modo che il progetto funzioni a meraviglia.
