@@ -20,4 +20,7 @@ add name="SetGlobalVariables" policy=read,write,policy,test comment="Setta a def
     :global wlanInterfaceName wifi2
     :global IfPoe ether2
     :global predisactivation 30s
+
+    #Disattiva il POE nell interfaccia scelta
+    /interface/ethernet/set $IfPoe poe-out=off
 }
