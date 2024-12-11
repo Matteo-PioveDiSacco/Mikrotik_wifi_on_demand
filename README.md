@@ -56,12 +56,12 @@ Vediamoli uno ad uno:
   Viene anche istanziata la fase di pre abbattimento del segnale Wifi che fa lampeggiare il pulsante luminoso all'approciarsi del termine del tempo a disposizione.
 - **_DeactivateWLAN.rsc** <a name="_DeactivateWLAN.rsc"></a><br>
   Questo script abbatte il segnale Wifi, interrompe il conteggio e spegne l'interfaccia POE per disattivare la luminosità del pulsante esterno. Viene richiamato o quando il tempo a disposizione è esaurito, oppure quando viene fatto un doppio click sul pulsante.
-- **_Predisattivo1.rsc** <a name="_Predisattivo1.rsc"></a><br>
-  Questo è il codice che serve per far lampeggiare il pulsante quando manca poco al termine del tempo a disposizione. Lo script viene fatto partire direttamente dallo *scheduler* di RouterOS "n" secondi o minuti prima della conclusione del tempo e viene richiamato solo se nel router è installato il pacchetto `wireless` per la gestione del wifi.
-  Quando il segnale Wifi viene abbattuto da `DeactivateWLAN` questo script viene eliminato.
-- **_Predisattivo2.rsc** <a name="_Predisattivo2.rsc"></a><br>
-Questo è il codice che serve per far lampeggiare il pulsante quando manca poco al termine del tempo a disposizione. Lo script viene fatto partire direttamente dallo *scheduler* di RouterOS "n" secondi o minuti prima della conclusione del tempo e viene richiamato solo se nel router è installato il pacchetto `vifi-qcom` per la gestione del wifi.
-  Quando il segnale Wifi viene abbattuto dallo script `DeactivateWLAN` questo script viene eliminato.
+- **_Predisattivo1.rsc** <a name="_Predisattivo1.rsc"></a>  
+  💡 Richiamato solo se nel router è installato il pacchetto `wireless` per la gestione del wifi.  
+  Questo è il codice che serve per far lampeggiare il pulsante quando manca poco al termine del tempo a disposizione. Lo script viene fatto partire direttamente dallo *scheduler* di RouterOS, la quantità di tempo prima della disattivazione viene specificata dalla variabile `predisactivation` nello script `SetGlobalVariables.rsc`. Quando il segnale Wifi viene abbattuto da `DeactivateWLAN` questo schedul viene eliminato.
+- **_Predisattivo2.rsc** <a name="_Predisattivo2.rsc"></a>  
+  💡 Richiamato solo se nel router è installato il pacchetto `wifi-qcom` per la gestione del wifi.  
+Come nello script precedente, questo è il codice che serve per far lampeggiare il pulsante quando manca poco al termine del tempo a disposizione. Lo script viene fatto partire direttamente dallo *scheduler* di RouterOS, la quantità di tempo prima della disattivazione viene specificata dalla variabile `predisactivation` nello script `SetGlobalVariables.rsc`. Quando il segnale Wifi viene abbattuto da `DeactivateWLAN` questo schedul viene eliminato.
 - **_SetGlobalVariables.rsc** <a name="_SetGlobalVariables.rsc"></a><br>
   Questo è il codice che serve per impostare le variabili globali ad un valore di default e deve essere considerato come lo *Script di Configurazione* dell'intera procedura. In esso sono raccolte le variabili che determinano i nomi delle porte Wifi e POE, il tempo di funzionamento del segnale Wifi e il tempo di pre abbattimento. Vediamole tutte:<br>
   <a name="nomeinterfacciapoe"></a>
@@ -74,7 +74,10 @@ Questo è il codice che serve per far lampeggiare il pulsante quando manca poco 
   **wifi** nel caso sia installato il pacchetto `wifi-qcom`  
   
   >:warning: **IMPORTANTE!**<br>
-  > Dopo aver importato tutti gli script nel sistema, se non si prevede di riavviare il dispositivo, è necessario eseguire manualmente almeno una volta lo script `SetGlobalVariables.rsc` così da settare correttamente le variabili globali, oppure, riavviando il sistema, lo script viene avviato automaticamente. Questo script viene attivato ad ogni reboot del sistema.<br>
+  > Dopo aver importato tutti gli script nel sistema, se non si prevede di riavviare il dispositivo, è necessario eseguire manualmente almeno una volta lo script `SetGlobalVariables.rsc` così da settare correttamente le variabili globali, oppure, riavviando il sistema, lo script viene avviato automaticamente. Questo script viene attivato ad ogni reboot del sistema.
+  
+  >:warning: **NOTA!**<br>
+  > Se si vuole modificare uno o più valori delle variabili globali contenute in questo script, è necessario poi effettuare un _run_ dello script per applicare le nuove impostazioni.    
   
 - **_Init.rsc** <a name="_Init.rsc"></a><br>
   Questo script deve essere lanciato solamente una volta dopo l'importazione degli altri script, la sua funzione è di impostare l'azione di default del tasto *MODE* e schedulare il settaggio delle variabili di default ad ogni riavvio del dispositivo, può essere considerato l'ultimo comando da dare per concludere la programmazione del sistema. Come si diceva, dopo averlo lanciato una volta non è necessario farlo più, nemmeno se si riavvia il dispositivo o si esegue un aggiornamento del firmware.
