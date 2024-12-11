@@ -22,7 +22,7 @@ La soluzione proposta in questo branch è stata elaborata dall'AI ChatGPT e poi 
 Rispetto alla versione main, questa risulta più comprensibile nel codice e quindi più personalizzabile, tuttavia necessita di più files e l'attivazione del dispositivo avviene dopo 1 secondi dalla pressione del tasto, questo potrebbe portare ad involontarie doppie pressioni che quindi disattiverebbero il funzionamento creando in questo modo delle anomalie.
 Tuttavia, vista la fluidità di organizzazione del codice, viene premiato questo branch che viene adottato e messo in produzione.
 > 🏆 _**NUOVO AGGIORNAMENTO!**  
->  Dalla versione 2.00 di questo script, il codice è stato modificato in modo da funzionare a prescindere dal pacchetto di gestione WIFI (quindi potrà essere sia `wireless` che `wifi-qcom`).
+>  Dalla versione 2.00, il codice è stato modificato in modo da funzionare a prescindere dal pacchetto di gestione WIFI (quindi potrà essere sia `wireless` che `wifi-qcom`).
 >  Fare attenzione solamente a mettere il nome dell'interfaccia giusta all'interno della variabile `wlanInterfaceName` presente nello script `_SetGlobalVariables.rsc` così [come specificato](#nomeinterfacciawifi) più avanti._
 
 ## Scopo del progetto <a name="scopo_del_progetto"></a>
@@ -65,8 +65,9 @@ Questo è il codice che serve per far lampeggiare il pulsante quando manca poco 
   Quando il segnale Wifi viene abbattuto dallo script `DeactivateWLAN` questo script viene eliminato.
 - **_SetGlobalVariables.rsc** <a name="_SetGlobalVariables.rsc"></a><br>
   Questo è il codice che serve per impostare le variabili globali ad un valore di default e deve essere considerato come lo *Script di Configurazione* dell'intera procedura. In esso sono raccolte le variabili che determinano i nomi delle porte Wifi e POE, il tempo di funzionamento del segnale Wifi e il tempo di pre abbattimento. Vediamole tutte:<br>
-  `IfPoe` -> Nome dell'interfaccia che fornisce l'energia POE<br>
-  `activationTime` -> Tempo che il segnale Wifi rimane attivo prima di essere abbatturo<br>
+  <a name="nomeinterfacciapoe"></a>
+  `IfPoe` -> Nome dell'interfaccia che fornisce l'energia POE. **Fare attenzione** a inserire il nome dell'interfaccia che rispecchia la vostra situazione, di default l'impostazione è a **`ether2`**  
+  `activationTime` -> Tempo che il segnale Wifi rimane attivo prima di essere abbattuto<br>
   `predisactivation` -> Quanto tempo prima dell'abbattimento del segnale Wifi il pulsante deve iniziare a lampeggiare<br>
   <a name="nomeinterfacciawifi"></a>
   `wlaninterfaceName` -> Nome dell'interfaccia che fornisce il segnale Wifi, fare attenzione al nome perchè a seconda del pacchetto di gestione della Wifi installato il nome dell'interfaccia cambia:<br>
@@ -82,13 +83,13 @@ Questo è il codice che serve per far lampeggiare il pulsante quando manca poco 
 ## Quindi, in breve <a name="quindi_in_breve"></a>
 Se avete trasferito i singoli files:
   1. Importare tutti gli script.
-  2. Configurare la giusta variabile `wlaninterfaceName` come visto [precedentemente](#nomeinterfacciawifi).
+  2. Configurare le giuste variabili: `wlaninterfaceName` come visto precedentemente [qui](#nomeinterfacciawifi) e `IfPoe` come visto precedentemente [qui](#nomeinterfacciapoe).
   3. Lanciare lo script `_Init.rsc`.
   4. Eseguire un reboot.
 
 Se avete trasferito un unico file *rsc*:
   1. Importare il file *rsc*.
-  2. Configurare la giusta variabile `wlaninterfaceName` come visto [precedentemente](#nomeinterfacciawifi).
+  2. Configurare le giuste variabili: `wlaninterfaceName` come visto precedentemente [qui](#nomeinterfacciawifi) e `IfPoe` come visto precedentemente [qui](#nomeinterfacciapoe).
   3. Eseguire un reboot.
 
 # Altre Considerazioni <a name="altre_considerazioni"></a>
