@@ -22,7 +22,7 @@ La soluzione proposta in questo branch è stata elaborata dall'AI ChatGPT e poi 
 Rispetto alla versione main, questa risulta più comprensibile nel codice e quindi più personalizzabile, tuttavia necessita di più files e l'attivazione del dispositivo avviene dopo 1 secondi dalla pressione del tasto, questo potrebbe portare ad involontarie doppie pressioni che quindi disattiverebbero il funzionamento creando in questo modo delle anomalie.
 Tuttavia, vista la fluidità di organizzazione del codice, viene premiato questo branch che viene adottato e messo in produzione.
 > 🏆 _**NUOVO AGGIORNAMENTO!**  
->  Dalla versione 2.00, il codice è stato modificato in modo da funzionare a prescindere dal pacchetto di gestione WIFI (quindi potrà essere sia `wireless` che `wifi-qcom`).
+>  Dalla versione 2.00, il codice è stato modificato in modo da funzionare a prescindere da quale pacchetto di gestione WIFI è presente nel dispositivo (che quindi potrà essere indifferentemente `wireless` o `wifi-qcom`).
 >  Fare attenzione solamente a mettere il nome dell'interfaccia giusta all'interno della variabile `wlanInterfaceName` presente nello script `_SetGlobalVariables.rsc` così [come specificato](#nomeinterfacciawifi) più avanti._
 
 ## Scopo del progetto <a name="scopo_del_progetto"></a>
