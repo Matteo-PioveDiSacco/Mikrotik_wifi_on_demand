@@ -69,7 +69,7 @@ Questo è il codice che serve per far lampeggiare il pulsante quando manca poco 
   `activationTime` -> Tempo che il segnale Wifi rimane attivo prima di essere abbattuto<br>
   `predisactivation` -> Quanto tempo prima dell'abbattimento del segnale Wifi il pulsante deve iniziare a lampeggiare<br>
   <a name="nomeinterfacciawifi"></a>
-  `wlaninterfaceName` -> Nome dell'interfaccia che fornisce il segnale Wifi, fare attenzione al nome perchè a seconda del pacchetto di gestione della Wifi installato il nome dell'interfaccia cambia:<br>
+  `wlaninterfaceName` -> Nome dell'interfaccia che fornisce il segnale Wifi, **fare attenzione** al nome perchè a seconda del pacchetto di gestione della Wifi installato il nome dell'interfaccia cambia:<br>
   **wlan** nel caso sia installato il pacchetto `wireless`;  
   **wifi** nel caso sia installato il pacchetto `wifi-qcom`  
   
