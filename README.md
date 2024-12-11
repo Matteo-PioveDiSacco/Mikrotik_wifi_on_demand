@@ -40,8 +40,8 @@ I files contengono il codice da copiare ed incollare in una finestra terminale d
 - Scaricare il file ZIP del progetto mediante il tasto `Code` -> `Clone` o dalla pagina delle release (scegliere sempre la release più alta) e scompattare l'archivio;  
 - Aprire una shell di DOS nella cartella dove avete estratto il file ZIP (usando `shift`->`tasto destro del mouse`->`Apri finestra shell qui`);  
 - Digitare il seguente comando:  
-   `type _*.rsc >> `unico.rsc`  
-- Verrà creato il file chiamato `unico.rsc` che conterrà tutti gli altri script;  
+   `type _*.rsc >> unico.rsc`  
+- Verrà creato il file chiamato `unico.rsc` che conterrà tutti gli script uno di seguito all'altro;  
 - Aprirlo con un editor di testo qualsiasi e copiare tutto il contenuto negli appunti (usando `Ctrl`+`A`per selezionare tutto e `Ctrl`+`C` per copiare);  
 - Andare nella pagina di Winbox ed aprire un terminale, quindi incollare gli appunti con la combinazione `Ctrl`+`V` o usando il mouse cliccando il tasto destro all'interno del terminale scegliendo `paste`;  
 - Per sicurezza dare un ulteriore `Invio` per assicurarsi di mettere in esecuzione l'ultimo comando incollato.  
