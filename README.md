@@ -84,9 +84,9 @@ Come nello script precedente, questo è il codice che serve per far lampeggiare 
 
 ## Quindi, in breve <a name="quindi_in_breve"></a>
 Se avete trasferito i singoli files:
-  1. Importare tutti gli script.
+  1. Importare tutti gli script come descritto precedentemente [qui](#i_files).
   2. Configurare le giuste variabili: `wlaninterfaceName` come visto precedentemente [qui](#nomeinterfacciawifi) e `IfPoe` come visto precedentemente [qui](#nomeinterfacciapoe).
-  3. Lanciare lo script `_Init.rsc`.
+  3. Lanciare i comandi contenuti in `_Init.rsc`.
   4. Eseguire un reboot.
 
 Se avete trasferito un unico file *rsc*:
