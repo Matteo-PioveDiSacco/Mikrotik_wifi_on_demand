@@ -80,7 +80,10 @@ Come nello script precedente, questo è il codice che serve per far lampeggiare 
   > Se si vuole modificare uno o più valori delle variabili globali contenute in questo script, è necessario poi effettuare un _run_ dello script per applicare le nuove impostazioni.    
   
 - **_Init.rsc** <a name="_Init.rsc"></a><br>
-  Questo script deve essere lanciato solamente una volta dopo l'importazione degli altri script, la sua funzione è di impostare l'azione di default del tasto *MODE* e schedulare il settaggio delle variabili di default ad ogni riavvio del dispositivo, può essere considerato l'ultimo comando da dare per concludere la programmazione del sistema. Come si diceva, dopo averlo lanciato una volta non è necessario farlo più, nemmeno se si riavvia il dispositivo o si esegue un aggiornamento del firmware.
+  Questo file contiene i comandi da dare una sola volta dopo l'importazione degli altri script, solitamente si lancia nei sistemi dove è appena stata fatta una cancellazione hardware della configurazione o comunque in tutti i casi dove non sia mai stato installato il sistema **WifionDemand** prima.
+  Se state semplicemente sostituendo la versione del programma **WifionDemand** con una nuova versione, non è necessario lanciare i comandi in esso contenuti.
+  La sua funzione è di impostare l'azione di default del tasto *MODE* e schedulare il settaggio delle variabili di default ad ogni riavvio del dispositivo, può essere considerato l'ultimo comando da dare per concludere la programmazione in un sistema nuovo. Come si diceva, dopo averlo lanciato una volta non è necessario farlo più, nemmeno se si riavvia il dispositivo o si esegue un aggiornamento firmware del Mikrotik.
+  Il contenuto del file deve essere copiato negli appunti del PC e poi incollato in una sessione Terminale di Winbox per eseguire in tempo reale i comandi presenti.
 
 ## Quindi, in breve <a name="quindi_in_breve"></a>
 Se avete trasferito i singoli files:
