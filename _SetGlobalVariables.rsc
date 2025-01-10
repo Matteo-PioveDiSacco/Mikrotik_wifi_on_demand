@@ -21,6 +21,21 @@ add name="SetGlobalVariables" policy=read,write,policy,test comment="Setta a def
     :global IfPoe ether2
     :global predisactivation 30s
 
+    #--- Manutenzione automatica fatta ad ogni ripartenza del dispositivo
+    #
     #Disattiva il POE nell interfaccia scelta
     /interface/ethernet/set $IfPoe poe-out=off
+
+    #Controlla che non ci siano vecchie istanze di scheduler non correttamente chiuse
+    :local schedulerPrefix "Predisattivo"
+    # Trova lo scheduler il cui nome inizia con "Predisattivo" seguito da un carattere
+    :local schedulerId [/system/scheduler find name~"^$schedulerPrefix."]
+    # Se esiste, elimina lo scheduler
+    :if ([:len $schedulerId] > 0) do={
+        /system/scheduler remove $schedulerId
+        :log info ("Scheduler con prefisso '" . $schedulerPrefix . "' eliminato.")
+        } else={
+            :log info ("Nessuno scheduler con prefisso '" . $schedulerPrefix . "' trovato.")
+          }
+    #--- Fine manutenzione
 }
